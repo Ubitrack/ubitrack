@@ -40,7 +40,6 @@ class UbitrackConan(ConanFile):
         "ubitrack_dataflow/1.3.0@ubitrack/stable",
         "ubitrack_facade/1.3.0@ubitrack/stable",
         "ubitrack_virtualenv_generator/1.3.0@ubitrack/stable",
-
         )
 
     def config_options(self):
