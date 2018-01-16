@@ -4,11 +4,18 @@
 
 This is a special "meta-package" which includes all other TUM ubitrack packages as conan dependencies. By adding this package to your Conan project, you effectively get "All of Ubitrack" libraries with one `requires` statement.
 
+### Preparations
+
+All TUM Ubitrack related software packages are hosted on the [CAMPAR](http://campar.in.tum.de) conan repository. The repository can be added using the following command after installing conan and your favourite compiler.
+
+    $ $ conan remote add camp "https://conan.campar.in.tum.de"
+
+
 ## For Users: Use this package
 
 ### Basic setup
 
-    $ conan install Boost/1.64.0@bincrafters/testing
+    $ conan install ubitrack/1.3.0@ubitrack/stable
 
 ### Project setup
 
@@ -38,9 +45,6 @@ This is a header only library, so nothing needs to be built.
 
     $ conan create ubitrack/stable
     
-## Add Remote
-
-    $ conan remote add camp "https://conan.campar.in.tum.de"
 
 ## Upload
 
