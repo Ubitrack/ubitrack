@@ -8,7 +8,7 @@ This is a special "meta-package" which includes all other TUM ubitrack packages 
 
 All TUM Ubitrack related software packages are hosted on the [CAMPAR](http://campar.in.tum.de) conan repository. The repository can be added using the following command after installing conan and your favourite compiler.
 
-    $ $ conan remote add camp "https://conan.campar.in.tum.de"
+    $ conan remote add camp "https://conan.campar.in.tum.de"
 
 
 ## For Users: Use this package
@@ -43,7 +43,7 @@ This is a header only library, so nothing needs to be built.
 
 ## Package 
 
-    $ conan create ubitrack/stable
+    $ conan create . ubitrack/stable
     
 
 ## Upload
