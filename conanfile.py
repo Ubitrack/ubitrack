@@ -1,13 +1,13 @@
 from conans import ConanFile
 
 
-class BoostConan(ConanFile):
-    name = "Boost"
-    version = "1.64.0"
+class UbitrackConan(ConanFile):
+    name = "ubitrack"
+    version = "1.3.0"
     settings = "os", "arch", "compiler", "build_type"
     short_paths = True
     url = "https://github.com/Ubitrack/conan-ubitrack"
-    description = "TUM CAMPAR Ubitrack Tracking and Sensor Fusion Framework"
+    description = "Meta-Package for TUM CAMPAR Ubitrack Tracking and Sensor Fusion Framework"
     license = "GPL"
 
     options = {"shared": [True, False],
