@@ -39,6 +39,7 @@ class UbitrackConan(ConanFile):
         "ubitrack_component_vision/1.3.0@ubitrack/stable",
         "ubitrack_dataflow/1.3.0@ubitrack/stable",
         "ubitrack_facade/1.3.0@ubitrack/stable",
+        "ubitrack_virtualenv_generator/1.3.0@ubitrack/stable",
 
         )
 
