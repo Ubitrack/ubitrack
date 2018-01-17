@@ -14,6 +14,7 @@ class UbitrackConan(ConanFile):
                "with_default_camera": [True, False],
                "with_network": [True, False],
                "with_python": [True, False],
+               "with_haptic_calibration": [True, False],
                "with_tracker_art": [True, False],
                # disabling vision completely requires more dynamic dependency management 
                # in utdataflow/utfacade and deps..
@@ -30,16 +31,18 @@ class UbitrackConan(ConanFile):
         "with_tracker_art=True",
         "with_vision=True",
         "with_visualization=True",
+        #optional packages
+        "with_haptic_calibration=False",
        )
 
     requires = (
-        "ubitrack_core/1.3.0@ubitrack/stable",
-        "ubitrack_component_core/1.3.0@ubitrack/stable",
-        "ubitrack_vision/1.3.0@ubitrack/stable",
-        "ubitrack_component_vision/1.3.0@ubitrack/stable",
-        "ubitrack_dataflow/1.3.0@ubitrack/stable",
-        "ubitrack_facade/1.3.0@ubitrack/stable",
-        "ubitrack_virtualenv_generator/1.3.0@ubitrack/stable",
+        "ubitrack_core/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_component_core/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_vision/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_component_vision/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_dataflow/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_facade/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % self.version,
         )
 
     def config_options(self):
@@ -77,22 +80,24 @@ class UbitrackConan(ConanFile):
 
     def requirements(self):
         if self.options.with_network:
-            self.requires("ubitrack_device_comm_zmq/1.3.0@ubitrack/stable")
+            self.requires("ubitrack_device_comm_zmq/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_visualization:
-            self.requires("ubitrack_visualization/1.3.0@ubitrack/stable")
-            self.requires("ubitrack_component_visualization/1.3.0@ubitrack/stable")
+            self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_component_visualization/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_tracker_art:
-            self.requires("ubitrack_device_tracker_art/1.3.0@ubitrack/stable")
+            self.requires("ubitrack_device_tracker_art/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_vision:
             if self.options.with_default_camera:
                 if self.settings.os == "Macos":
-                    self.requires("ubitrack_device_camera_avfoundation/1.3.0@ubitrack/stable")
+                    self.requires("ubitrack_device_camera_avfoundation/[>=%s]@ubitrack/stable" % self.version)
                 else:
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
 
-
+        if self.options.with_haptic_calibration:
+            self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_component_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
 
 
