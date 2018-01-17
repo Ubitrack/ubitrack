@@ -20,6 +20,8 @@ class UbitrackConan(ConanFile):
                # in utdataflow/utfacade and deps..
                "with_vision": [True, False],
                "with_visualization": [True, False],
+               "with_camera_directshow": [True, False],
+               "with_camera_flycapture": [True, False],
             }
 
     default_options = (
@@ -33,6 +35,8 @@ class UbitrackConan(ConanFile):
         "with_visualization=True",
         #optional packages
         "with_haptic_calibration=False",
+        "with_camera_directshow=False",
+        "with_camera_flycapture=False",
        )
 
     requires = (
@@ -93,8 +97,15 @@ class UbitrackConan(ConanFile):
             if self.options.with_default_camera:
                 if self.settings.os == "Macos":
                     self.requires("ubitrack_device_camera_avfoundation/[>=%s]@ubitrack/stable" % self.version)
+                elif self.settings.os == "Windows":
+                    self.requires("ubitrack_device_camera_msmf/[>=%s]@ubitrack/stable" % self.version)
                 else:
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
+            if self.settings.os == "Windows" and self.options.with_camera_directshow:
+                self.requires("ubitrack_device_camera_directshow/[>=%s]@ubitrack/stable" % self.version)
+            if self.options.with_camera_flycapture:
+                self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
+
 
         if self.options.with_haptic_calibration:
             self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
