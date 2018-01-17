@@ -6,7 +6,7 @@ class UbitrackConan(ConanFile):
     version = "1.3.0"
     settings = "os", "arch", "compiler", "build_type"
     short_paths = True
-    url = "https://github.com/Ubitrack/conan-ubitrack"
+    url = "https://github.com/Ubitrack/ubitrack.git"
     description = "Meta-Package for TUM CAMPAR Ubitrack Tracking and Sensor Fusion Framework"
     license = "GPL"
 
