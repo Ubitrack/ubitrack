@@ -21,6 +21,7 @@ class UbitrackConan(ConanFile):
                "with_vision": [True, False],
                "with_visualization": [True, False],
                "with_camera_directshow": [True, False],
+               "with_camera_flycapture": [True, False],
             }
 
     default_options = (
@@ -35,6 +36,7 @@ class UbitrackConan(ConanFile):
         #optional packages
         "with_haptic_calibration=False",
         "with_camera_directshow=False",
+        "with_camera_flycapture=False",
        )
 
     requires = (
@@ -101,6 +103,8 @@ class UbitrackConan(ConanFile):
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
             if self.settings.os == "Windows" and self.options.with_camera_directshow:
                 self.requires("ubitrack_device_camera_directshow/[>=%s]@ubitrack/stable" % self.version)
+            if self.options.with_camera_flycapture:
+                self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
 
 
         if self.options.with_haptic_calibration:
