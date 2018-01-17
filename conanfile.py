@@ -36,13 +36,13 @@ class UbitrackConan(ConanFile):
        )
 
     requires = (
-        "ubitrack_core/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_component_core/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_vision/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_component_vision/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_dataflow/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_facade/[>=%s]@ubitrack/stable" % self.version,
-        "ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % self.version,
+        "ubitrack_core/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_component_core/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_vision/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_component_vision/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_dataflow/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_facade/[>=%s]@ubitrack/stable" % version,
+        "ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % version,
         )
 
     def config_options(self):
