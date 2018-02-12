@@ -64,12 +64,12 @@ class UbitrackConan(ConanFile):
         self.options["Boost"].without_coroutine = True
         self.options["Boost"].without_coroutine2 = True
         self.options["Boost"].without_exception = True
-        self.options["Boost"].without_fiber = True
+        # self.options["Boost"].without_fiber = True
         self.options["Boost"].without_graph = True
         self.options["Boost"].without_graph_parallel = True
         self.options["Boost"].without_locale = True
         self.options["Boost"].without_log = True
-        self.options["Boost"].without_metaparse = True
+        # self.options["Boost"].without_metaparse = True
         self.options["Boost"].without_mpi = True
         self.options["Boost"].without_signals = True
         self.options["Boost"].without_timer = True
