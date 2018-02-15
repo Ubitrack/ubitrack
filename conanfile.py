@@ -22,6 +22,7 @@ class UbitrackConan(ConanFile):
                "with_visualization": [True, False],
                "with_camera_directshow": [True, False],
                "with_camera_flycapture": [True, False],
+               "with_camera_kinect2": [True, False],
             }
 
     default_options = (
@@ -37,6 +38,7 @@ class UbitrackConan(ConanFile):
         "with_haptic_calibration=False",
         "with_camera_directshow=False",
         "with_camera_flycapture=False",
+        "with_camera_kinect2=False",
        )
 
     requires = (
@@ -52,6 +54,12 @@ class UbitrackConan(ConanFile):
     def config_options(self):
         if not self.options.with_vision:
             self.options.remove("with_default_camera")
+            self.options.remove("with_default_flycapture")
+            self.options.remove("with_default_directshow")
+
+        if self.settings.os != "Windows" or not self.options.with_vision:
+            self.options.remove("with_camera_kinect2")
+
 
 
     def configure(self):
@@ -103,6 +111,8 @@ class UbitrackConan(ConanFile):
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
             if self.settings.os == "Windows" and self.options.with_camera_directshow:
                 self.requires("ubitrack_device_camera_directshow/[>=%s]@ubitrack/stable" % self.version)
+            if self.settings.os == "Windows" and self.options.with_camera_kinect2:
+                self.requires("ubitrack_device_camera_kinect2/[>=%s]@ubitrack/stable" % self.version)
             if self.options.with_camera_flycapture:
                 self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
 
