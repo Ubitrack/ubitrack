@@ -29,8 +29,7 @@ class UbitrackConan(ConanFile):
         "shared=True",
         "with_default_camera=True",
         "with_network=True",
-        # For now we do not want python to be default
-        "with_python=True",
+        "with_python=False",
         "with_tracker_art=True",
         "with_vision=True",
         "with_visualization=True",
