@@ -13,7 +13,6 @@ class UbitrackConan(ConanFile):
     options = {"shared": [True, False],
                "with_default_camera": [True, False],
                "with_network": [True, False],
-               "with_python": [True, False],
                "with_haptic_calibration": [True, False],
                "with_tracker_art": [True, False],
                # disabling vision completely requires more dynamic dependency management 
@@ -29,7 +28,6 @@ class UbitrackConan(ConanFile):
         "shared=True",
         "with_default_camera=True",
         "with_network=True",
-        "with_python=False",
         "with_tracker_art=True",
         "with_vision=True",
         "with_visualization=True",
@@ -58,35 +56,6 @@ class UbitrackConan(ConanFile):
 
         if self.settings.os != "Windows" or not self.options.with_vision:
             self.options.remove("with_camera_kinect2")
-
-
-
-    def configure(self):
-        # Default settings for dependencies
-
-        # Boost
-        self.options["Boost"].without_atomic = True
-        self.options["Boost"].without_container = True
-        self.options["Boost"].without_context = True
-        self.options["Boost"].without_coroutine = True
-        self.options["Boost"].without_coroutine2 = True
-        self.options["Boost"].without_exception = True
-        # self.options["Boost"].without_fiber = True
-        self.options["Boost"].without_graph = True
-        self.options["Boost"].without_graph_parallel = True
-        self.options["Boost"].without_locale = True
-        self.options["Boost"].without_log = True
-        # self.options["Boost"].without_metaparse = True
-        self.options["Boost"].without_mpi = True
-        self.options["Boost"].without_signals = True
-        self.options["Boost"].without_timer = True
-        # self.options["Boost"].without_type_erasure = True
-        self.options["Boost"].without_wave = True
-
-        if self.options.with_python:
-            self.options["Boost"].without_python = False
-        else:
-            self.options["Boost"].without_python = True
 
 
     def requirements(self):
