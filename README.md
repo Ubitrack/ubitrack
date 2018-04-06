@@ -52,3 +52,15 @@ This is a header only library, so nothing needs to be built.
 
 ### License
 [Ubitrack](LICENSE)
+
+
+## Install Notes for various platforms
+
+### OSX
+
+use homebrew to install the following dependencies
+
+- git
+- cmake
+- libusb
+- swig
