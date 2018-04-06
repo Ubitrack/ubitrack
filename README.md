@@ -6,6 +6,10 @@ This is a special "meta-package" which includes all other TUM ubitrack packages 
 
 ### Preparations
 
+Some dependencies are fetched from the bincrafters repository. If not already active, you should add their repository:
+
+    $ conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
+
 All TUM Ubitrack related software packages are hosted on the [CAMPAR](http://campar.in.tum.de) conan repository. The repository can be added using the following command after installing conan and your favourite compiler.
 
     $ conan remote add camp "https://conan.campar.in.tum.de"
