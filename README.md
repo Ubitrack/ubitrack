@@ -12,7 +12,8 @@ Some dependencies are fetched from the bincrafters repository. If not already ac
 
 All TUM Ubitrack related software packages are hosted on the [CAMPAR](http://campar.in.tum.de) conan repository. The repository can be added using the following command after installing conan and your favourite compiler.
 
-    $ conan remote add camp "https://conan.campar.in.tum.de"
+    $ conan remote add camposs "https://conan.campar.in.tum.de/api/conan/conan-camposs"
+    $ conan remote add ubitrack "https://conan.campar.in.tum.de/api/conan/conan-ubitrack"
 
 
 ## For Users: Use this package
