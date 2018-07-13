@@ -18,6 +18,7 @@ class UbitrackConan(ConanFile):
                # disabling vision completely requires more dynamic dependency management 
                # in utdataflow/utfacade and deps..
                "with_vision": [True, False],
+               "with_vision_aruco": [True, False],
                "with_visualization": [True, False],
                "with_camera_directshow": [True, False],
                "with_camera_flycapture": [True, False],
@@ -30,6 +31,7 @@ class UbitrackConan(ConanFile):
         "with_network=True",
         "with_tracker_art=True",
         "with_vision=True",
+        "with_vision_aruco=True",
         "with_visualization=True",
         #optional packages
         "with_haptic_calibration=False",
@@ -41,8 +43,6 @@ class UbitrackConan(ConanFile):
     requires = (
         "ubitrack_core/[>=%s]@ubitrack/stable" % version,
         "ubitrack_component_core/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_vision/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_component_vision/[>=%s]@ubitrack/stable" % version,
         "ubitrack_dataflow/[>=%s]@ubitrack/stable" % version,
         "ubitrack_facade/[>=%s]@ubitrack/stable" % version,
         "ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % version,
@@ -59,17 +59,14 @@ class UbitrackConan(ConanFile):
 
 
     def requirements(self):
-        if self.options.with_network:
-            self.requires("ubitrack_device_comm_zmq/[>=%s]@ubitrack/stable" % self.version)
-
-        if self.options.with_visualization:
-            self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
-            self.requires("ubitrack_component_visualization/[>=%s]@ubitrack/stable" % self.version)
-
-        if self.options.with_tracker_art:
-            self.requires("ubitrack_device_tracker_art/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_vision:
+            self.requires("ubitrack_vision/[>=%s]@ubitrack/stable" % self.version) 
+            self.requires("ubitrack_component_vision/[>=%s]@ubitrack/stable" % self.version)
+
+            if self.options.with_vision_aruco:
+                self.requires("ubitrack_component_vision_aruco/[>=%s]@ubitrack/stable" % self.version)
+
             if self.options.with_default_camera:
                 if self.settings.os == "Macos":
                     self.requires("ubitrack_device_camera_avfoundation/[>=%s]@ubitrack/stable" % self.version)
@@ -84,6 +81,15 @@ class UbitrackConan(ConanFile):
             if self.options.with_camera_flycapture:
                 self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
 
+        if self.options.with_visualization:
+            self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_component_visualization/[>=%s]@ubitrack/stable" % self.version)
+
+        if self.options.with_tracker_art:
+            self.requires("ubitrack_device_tracker_art/[>=%s]@ubitrack/stable" % self.version)
+
+        if self.options.with_network:
+            self.requires("ubitrack_device_comm_zmq/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_haptic_calibration:
             self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
