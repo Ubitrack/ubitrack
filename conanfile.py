@@ -38,6 +38,7 @@ class UbitrackConan(ConanFile):
         "with_camera_directshow=False",
         "with_camera_flycapture=False",
         "with_camera_kinect2=False",
+        "glad:extensions=None",
        )
 
     requires = (
