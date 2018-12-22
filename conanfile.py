@@ -73,6 +73,8 @@ class UbitrackConan(ConanFile):
                     self.requires("ubitrack_device_camera_avfoundation/[>=%s]@ubitrack/stable" % self.version)
                 elif self.settings.os == "Windows":
                     self.requires("ubitrack_device_camera_msmf/[>=%s]@ubitrack/stable" % self.version)
+                elif self.settings.os == "Linux":
+                    self.requires("ubitrack_device_camera_v4l/[>=%s]@ubitrack/stable" % self.version)
                 else:
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
             if self.settings.os == "Windows" and self.options.with_camera_directshow:
