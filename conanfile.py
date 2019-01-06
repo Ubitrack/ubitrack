@@ -119,4 +119,7 @@ class UbitrackConan(ConanFile):
             self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
             self.requires("ubitrack_component_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
 
+        if self.options.with_trackman:
+            self.requires("ubitrack_tools_trackman/[>=1.0]@ubitrack/stable")
+
 
