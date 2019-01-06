@@ -20,9 +20,13 @@ class UbitrackConan(ConanFile):
                "with_vision": [True, False],
                "with_vision_aruco": [True, False],
                "with_visualization": [True, False],
+               "with_python": [True, False],
+               "with_trackman": [True, False],
                "with_camera_directshow": [True, False],
                "with_camera_flycapture": [True, False],
                "with_camera_kinect2": [True, False],
+               "with_camera_zed": [True, False],
+               "with_camera_realsense": [True, False],
             }
 
     default_options = (
@@ -34,10 +38,14 @@ class UbitrackConan(ConanFile):
         "with_vision_aruco=True",
         "with_visualization=True",
         #optional packages
+        "with_python=False",
+        "with_trackman=False",
         "with_haptic_calibration=False",
         "with_camera_directshow=False",
         "with_camera_flycapture=False",
         "with_camera_kinect2=False",
+        "with_camera_zed=False",
+        "with_camera_realsense=False",
         "glad:extensions=None",
        )
 
@@ -54,10 +62,11 @@ class UbitrackConan(ConanFile):
             self.options.remove("with_default_camera")
             self.options.remove("with_default_flycapture")
             self.options.remove("with_default_directshow")
+            self.options.remove("with_default_realsense")
+            self.options.remove("with_default_zed")
 
         if self.settings.os != "Windows" or not self.options.with_vision:
             self.options.remove("with_camera_kinect2")
-
 
     def requirements(self):
 
@@ -77,12 +86,21 @@ class UbitrackConan(ConanFile):
                     self.requires("ubitrack_device_camera_v4l/[>=%s]@ubitrack/stable" % self.version)
                 else:
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
+
             if self.settings.os == "Windows" and self.options.with_camera_directshow:
                 self.requires("ubitrack_device_camera_directshow/[>=%s]@ubitrack/stable" % self.version)
+
             if self.settings.os == "Windows" and self.options.with_camera_kinect2:
                 self.requires("ubitrack_device_camera_kinect2/[>=%s]@ubitrack/stable" % self.version)
+
             if self.options.with_camera_flycapture:
                 self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
+
+            if self.options.with_camera_realsense:
+                self.requires("ubitrack_device_camera_realsense/[>=%s]@ubitrack/stable" % self.version)
+
+            if self.options.with_camera_zed:
+                self.requires("ubitrack_device_camera_zed/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_visualization:
             self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
@@ -93,6 +111,9 @@ class UbitrackConan(ConanFile):
 
         if self.options.with_network:
             self.requires("ubitrack_device_comm_zmq/[>=%s]@ubitrack/stable" % self.version)
+
+        if self.options.with_python:
+            self.requires("ubitrack_lang_python/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_haptic_calibration:
             self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
