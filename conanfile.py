@@ -27,6 +27,7 @@ class UbitrackConan(ConanFile):
                "with_camera_kinect2": [True, False],
                "with_camera_zed": [True, False],
                "with_camera_realsense": [True, False],
+               "with_device_videostream": [True, False],
             }
 
     default_options = (
@@ -46,6 +47,7 @@ class UbitrackConan(ConanFile):
         "with_camera_kinect2=False",
         "with_camera_zed=False",
         "with_camera_realsense=False",
+        "with_device_videostream=False",
         "glad:extensions=None",
        )
 
@@ -101,6 +103,9 @@ class UbitrackConan(ConanFile):
 
             if self.options.with_camera_zed:
                 self.requires("ubitrack_device_camera_zed/[>=%s]@ubitrack/stable" % self.version)
+
+            if self.options.with_device_videostream:
+                self.requires("ubitrack_device_videostream/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_visualization:
             self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
