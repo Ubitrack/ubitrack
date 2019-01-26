@@ -105,7 +105,7 @@ class UbitrackConan(ConanFile):
                 self.requires("ubitrack_device_camera_zed/[>=%s]@ubitrack/stable" % self.version)
 
             if self.options.with_device_videostream:
-                self.requires("ubitrack_device_videostream/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_comm_videostream/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_visualization:
             self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
