@@ -28,36 +28,31 @@ class UbitrackConan(ConanFile):
                "with_camera_zed": [True, False],
                "with_camera_realsense": [True, False],
                "with_device_videostream": [True, False],
+               "workspaceBuild" : [True, False],
             }
 
-    default_options = (
-        "shared=True",
-        "with_default_camera=True",
-        "with_network=True",
-        "with_tracker_art=True",
-        "with_vision=True",
-        "with_vision_aruco=True",
-        "with_visualization=True",
+    default_options = {
+        "shared":True,
+        "with_default_camera" : True,
+        "with_network" : True,
+        "with_tracker_art" : True,
+        "with_vision" : True,
+        "with_vision_aruco" : True,
+        "with_visualization" : True,
         #optional packages
-        "with_python=False",
-        "with_trackman=False",
-        "with_haptic_calibration=False",
-        "with_camera_directshow=False",
-        "with_camera_flycapture=False",
-        "with_camera_kinect2=False",
-        "with_camera_zed=False",
-        "with_camera_realsense=False",
-        "with_device_videostream=False",
-        "glad:extensions=None",
-       )
+        "with_python" : False,
+        "with_trackman" : False,
+        "with_haptic_calibration" : False,
+        "with_camera_directshow" : False,
+        "with_camera_flycapture" : False,
+        "with_camera_kinect2" : False,
+        "with_camera_zed" : False,
+        "with_camera_realsense" : False,
+        "with_device_videostream" : False,
+        "glad:extensions" : None,
+        "workspaceBuild" : False,
+       }
 
-    requires = (
-        "ubitrack_core/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_component_core/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_dataflow/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_facade/[>=%s]@ubitrack/stable" % version,
-        "ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % version,
-        )
 
     def config_options(self):
         if not self.options.with_vision:
@@ -71,58 +66,68 @@ class UbitrackConan(ConanFile):
             self.options.remove("with_camera_kinect2")
 
     def requirements(self):
+        userChannel = "ubitrack/stable"
+        if self.options.workspaceBuild:
+            userChannel = "local/dev"
+
+
+        self.requires("ubitrack_core/%s@%s" % (self.version, userChannel))
+        self.requires("ubitrack_component_core/%s@%s" % (self.version, userChannel))
+        self.requires("ubitrack_dataflow/%s@%s" % (self.version, userChannel) )
+        self.requires("ubitrack_facade/%s@%s" % (self.version, userChannel) )
+        self.requires("ubitrack_virtualenv_generator/[>=%s]@ubitrack/stable" % self.version)
 
         if self.options.with_vision:
-            self.requires("ubitrack_vision/[>=%s]@ubitrack/stable" % self.version) 
-            self.requires("ubitrack_component_vision/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_vision/[>=%s]@%s" % (self.version, userChannel)) 
+            self.requires("ubitrack_component_vision/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_vision_aruco:
-                self.requires("ubitrack_component_vision_aruco/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_component_vision_aruco/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_default_camera:
                 if self.settings.os == "Macos":
-                    self.requires("ubitrack_device_camera_avfoundation/[>=%s]@ubitrack/stable" % self.version)
+                    self.requires("ubitrack_device_camera_avfoundation/[>=%s]@%s" % (self.version, userChannel))
                 elif self.settings.os == "Windows":
-                    self.requires("ubitrack_device_camera_msmf/[>=%s]@ubitrack/stable" % self.version)
+                    self.requires("ubitrack_device_camera_msmf/[>=%s]@%s" % (self.version, userChannel))
                 elif self.settings.os == "Linux":
-                    self.requires("ubitrack_device_camera_v4l/[>=%s]@ubitrack/stable" % self.version)
+                    self.requires("ubitrack_device_camera_v4l/[>=%s]@%s" % (self.version, userChannel))
                 else:
                     self.output.warn("No default camera found for OS: %s" % self.settings.os)
 
             if self.settings.os == "Windows" and self.options.with_camera_directshow:
-                self.requires("ubitrack_device_camera_directshow/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_camera_directshow/[>=%s]@%s" % (self.version, userChannel))
 
             if self.settings.os == "Windows" and self.options.with_camera_kinect2:
-                self.requires("ubitrack_device_camera_kinect2/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_camera_kinect2/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_camera_flycapture:
-                self.requires("ubitrack_device_camera_flycapture/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_camera_flycapture/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_camera_realsense:
-                self.requires("ubitrack_device_camera_realsense/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_camera_realsense/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_camera_zed:
-                self.requires("ubitrack_device_camera_zed/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_camera_zed/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_device_videostream:
-                self.requires("ubitrack_device_comm_videostream/[>=%s]@ubitrack/stable" % self.version)
+                self.requires("ubitrack_device_comm_videostream/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_visualization:
-            self.requires("ubitrack_visualization/[>=%s]@ubitrack/stable" % self.version)
-            self.requires("ubitrack_component_visualization/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_visualization/[>=%s]@%s" % (self.version, userChannel))
+            self.requires("ubitrack_component_visualization/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_tracker_art:
-            self.requires("ubitrack_device_tracker_art/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_device_tracker_art/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_network:
-            self.requires("ubitrack_device_comm_zmq/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_device_comm_zmq/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_python:
-            self.requires("ubitrack_lang_python/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_lang_python/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_haptic_calibration:
-            self.requires("ubitrack_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
-            self.requires("ubitrack_component_hapticcalibration/[>=%s]@ubitrack/stable" % self.version)
+            self.requires("ubitrack_hapticcalibration/[>=%s]@%s" % (self.version, userChannel))
+            self.requires("ubitrack_component_hapticcalibration/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_trackman:
             self.requires("ubitrack_tools_trackman/[>=1.0]@ubitrack/stable")
