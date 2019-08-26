@@ -26,6 +26,7 @@ class UbitrackConan(ConanFile):
                "with_camera_directshow": [True, False],
                "with_camera_flycapture": [True, False],
                "with_camera_kinect2": [True, False],
+               "with_camera_kinect4azure": [True, False],
                "with_camera_zed": [True, False],
                "with_camera_realsense": [True, False],
                "with_device_videostream": [True, False],
@@ -48,6 +49,7 @@ class UbitrackConan(ConanFile):
         "with_camera_directshow" : False,
         "with_camera_flycapture" : False,
         "with_camera_kinect2" : False,
+        "with_camera_kinect4azure" : False,
         "with_camera_zed" : False,
         "with_camera_realsense" : False,
         "with_device_videostream" : False,
@@ -60,10 +62,11 @@ class UbitrackConan(ConanFile):
     def config_options(self):
         if not self.options.with_vision:
             self.options.remove("with_default_camera")
-            self.options.remove("with_default_flycapture")
-            self.options.remove("with_default_directshow")
-            self.options.remove("with_default_realsense")
-            self.options.remove("with_default_zed")
+            self.options.remove("with_camera_flycapture")
+            self.options.remove("with_camera_directshow")
+            self.options.remove("with_camera_realsense")
+            self.options.remove("with_camera_zed")
+            self.options.remove("with_camera_kinect4azure")
 
         if self.settings.os != "Windows" or not self.options.with_vision:
             self.options.remove("with_camera_kinect2")
@@ -108,6 +111,9 @@ class UbitrackConan(ConanFile):
 
             if self.options.with_camera_realsense:
                 self.requires("ubitrack_device_camera_realsense/[>=%s]@%s" % (self.version, userChannel))
+
+            if self.options.with_camera_kinect4azure:
+                self.requires("ubitrack_device_camera_kinect4azure/[>=%s]@%s" % (self.version, userChannel))
 
             if self.options.with_camera_zed:
                 self.requires("ubitrack_device_camera_zed/[>=%s]@%s" % (self.version, userChannel))
