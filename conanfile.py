@@ -128,8 +128,8 @@ class UbitrackConan(ConanFile):
         if self.options.with_tracker_art:
             self.requires("ubitrack_device_tracker_art/[>=%s]@%s" % (self.version, userChannel))
 
-        #if self.options.with_tracker_vicon:
-        self.requires("ubitrack_device_tracker_vicon/[>=%s]@%s" % (self.version, userChannel))
+        if self.options.with_tracker_vicon:
+            self.requires("ubitrack_device_tracker_vicon/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_network:
             self.requires("ubitrack_device_comm_zmq/[>=%s]@%s" % (self.version, userChannel))
