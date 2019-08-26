@@ -9,6 +9,7 @@ class UbitrackConan(ConanFile):
     url = "https://github.com/Ubitrack/ubitrack.git"
     description = "Meta-Package for TUM CAMPAR Ubitrack Tracking and Sensor Fusion Framework"
     license = "GPL"
+    generators = "ubitrack_virtualenv_generator"
 
     options = {"shared": [True, False],
                "with_default_camera": [True, False],
@@ -28,6 +29,7 @@ class UbitrackConan(ConanFile):
                "with_camera_zed": [True, False],
                "with_camera_realsense": [True, False],
                "with_device_videostream": [True, False],
+               "with_tracker_vicon": [True, False],
                "workspaceBuild" : [True, False],
             }
 
@@ -49,6 +51,7 @@ class UbitrackConan(ConanFile):
         "with_camera_zed" : False,
         "with_camera_realsense" : False,
         "with_device_videostream" : False,
+        "with_tracker_vicon" : False,
         "glad:extensions" : None,
         "workspaceBuild" : False,
        }
@@ -118,6 +121,9 @@ class UbitrackConan(ConanFile):
 
         if self.options.with_tracker_art:
             self.requires("ubitrack_device_tracker_art/[>=%s]@%s" % (self.version, userChannel))
+
+        #if self.options.with_tracker_vicon:
+        self.requires("ubitrack_device_tracker_vicon/[>=%s]@%s" % (self.version, userChannel))
 
         if self.options.with_network:
             self.requires("ubitrack_device_comm_zmq/[>=%s]@%s" % (self.version, userChannel))
